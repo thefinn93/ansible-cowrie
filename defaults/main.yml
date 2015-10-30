@@ -1,0 +1,32 @@
+---
+  cowrie_user: cowrie
+  cowrie_home: /opt/cowrie
+  cowrie_repo: https://github.com/micheloosterhof/cowrie
+  cowrie_src_dir: "{{ cowrie_home }}/cowrie"
+  cowrie_venv: "{{ cowrie_src_dir }}/env"
+  cowrie_redirect_port: no
+
+  # Cowrie settings
+  cowrie_port: 2222
+  cowrie_hostname: srv04
+  cowrie_log_path: log
+  cowrie_download_path: dl
+  cowrie_contents_path: honeyfs
+  cowrie_filesystem_file: data/fs.pickle
+  cowrie_data_path: data
+  cowrie_auth_class: UserDB
+  cowrie_auth_none_enabled: false
+  cowrie_txtcmds_path: txtcmds
+  cowrie_auth_class_parameters: UserDB
+  cowrie_rsa_public_key: "{{ cowrie_data_path }}/ssh_host_rsa_key.pub"
+  cowrie_rsa_private_key: "{{ cowrie_data_path }}/ssh_host_rsa_key"
+  cowrie_dsa_public_key: "{{ cowrie_data_path }}/ssh_host_dsa_key.pub"
+  cowrie_dsa_private_key: "{{ cowrie_data_path }}/ssh_host_dsa_key"
+  cowrie_sftp_enable: true
+  cowrie_ssh_version_string: "SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u2"
+  cowrie_interact_enabled: false
+  cowrie_interact_port: 5123
+
+  cowrie_settings:
+    output_jsonlog:
+      logfile: "{{ cowrie_log_path }}/cowrie.json"

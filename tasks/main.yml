@@ -1,0 +1,38 @@
+---
+  - name: Create cowrie user
+    user: name="{{ cowrie_user }}" home="{{ cowrie_home }}"
+
+  - name: Clone the cowrie code
+    become: yes
+    become_user: "{{ cowrie_user }}"
+    git: repo="{{ cowrie_repo }}" dest="{{ cowrie_src_dir }}"
+
+  - name: Install some python packages
+    become: yes
+    become_user: "{{ cowrie_user }}"
+    pip: virtualenv="{{ cowrie_venv }}" name="{{ item }}"
+    with_items:
+      - Twisted
+      - pycrypto
+      - pyasn1
+      - pyOpenSSL
+      - zope.interface
+      - service_identity
+
+  - name: Install cowrie config file
+    become: yes
+    become_user: "{{ cowrie_user }}"
+    template: src=cowrie.cfg.j2 dest="{{ cowrie_src_dir }}/cowrie.cfg"
+    notify:
+      - restart cowrie
+
+  - name: Install systemd service file
+    template: src=cowrie.service.j2 dest=/etc/systemd/system/cowrie.service
+    notify:
+      - reload systemctl
+      - restart cowrie
+
+  - meta: flush_handlers
+
+  - name: Enable cowrie service
+    service: name=cowrie enabled=yes
