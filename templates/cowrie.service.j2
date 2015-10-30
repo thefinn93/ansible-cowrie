@@ -7,7 +7,9 @@ After=network.target
 Type=simple
 ProtectSystem=true
 {% if cowrie_redirect_port %}ExecStartPre=/sbin/iptables -t nat -A PREROUTING -p tcp --dport 22 -j REDIRECT --to-port {{ cowrie_port }}{% endif %}
+
 ExecStart={{ cowrie_venv }}/bin/twistd -n cowrie
+PermissionsStartOnly=yes
 WorkingDirectory={{ cowrie_src_dir }}
 User={{ cowrie_user }}
 Restart=always

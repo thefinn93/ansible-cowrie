@@ -38,7 +38,7 @@ interact_port = {{ cowrie_interact_port }}
 {% endfor %}
 {% endif %}
 {% for section, settings in cowrie_settings.iteritems() %}
-{% if section == "honeypot" %}
+{% if section != "honeypot" %}
 [{{ section }}]
 {% for key, value in settings.iteritems() %}
 {{ key }} = {{ value }}
